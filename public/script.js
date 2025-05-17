@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function updateNumSets(delta) {
     const currentValue = parseInt(numSetsInput.value) || 1;
-    const newValue = Math.max(1, Math.min(25, currentValue + delta));
+    const newValue = Math.max(1, Math.min(501, currentValue + delta));
     numSetsInput.value = newValue;
   }
 
@@ -123,8 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
   async function generateCards() {
     const numSets = Number.parseInt(numSetsInput.value);
 
-    if (numSets < 1 || numSets >500) {
-      showAlert("error", "Errore", "Inserisci un numero di set valido (1-500)");
+    if (numSets < 1 || numSets >501) {
+      showAlert("error", "Errore", "Inserisci un numero di set valido (1-501)");
       return;
     }
 
