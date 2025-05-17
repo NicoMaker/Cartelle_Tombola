@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore Cartelle Tombola</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Generatore di Cartelle della Tombola</h1>
+            <p>Genera set di cartelle per la tombola con tutti i numeri da 1 a 90</p>
+        </header>
+
+        <div class="controls">
+            <div class="form-group">
+                <label for="numSets">Numero di set da generare:</label>
+                <input type="number" id="numSets" min="1" max="10" value="1">
+                <small>Ogni set contiene 6 cartelle con tutti i numeri da 1 a 90</small>
+            </div>
+
+            <button id="generateBtn" class="btn primary">Genera Cartelle</button>
+            <button id="printBtn" class="btn secondary" disabled>Stampa Cartelle</button>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Generazione in corso...</p>
+        </div>
+
+        <div id="cardsContainer" class="cards-container"></div>
+    </div>
+
+    <footer>
+        <p>© 2025 Generatore Cartelle Tombola</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
