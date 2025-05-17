@@ -6,37 +6,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generatore Cartelle Tombola</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Font Awesome per le icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>Generatore di Cartelle della Tombola</h1>
-            <p>Genera set di cartelle per la tombola con tutti i numeri da 1 a 90</p>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-dice"></i>
+            </div>
+            <div class="title-container">
+                <h1>Generatore Cartelle Tombola</h1>
+                <p>Crea e stampa cartelle professionali per la tua tombola</p>
+            </div>
         </header>
 
-        <div class="controls">
-            <div class="form-group">
-                <label for="numSets">Numero di set da generare:</label>
-                <input type="number" id="numSets" min="1" max="10" value="1">
-                <small>Ogni set contiene 6 cartelle con tutti i numeri da 1 a 90</small>
+        <main class="app-content">
+            <div class="control-panel">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-cog"></i> Impostazioni</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="numSets">Numero di set da generare:</label>
+                            <div class="input-with-buttons">
+                                <button class="btn-icon decrease" aria-label="Diminuisci">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" id="numSets" min="1" max="25" value="1">
+                                <button class="btn-icon increase" aria-label="Aumenta">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <small>Ogni set contiene 6 cartelle con tutti i numeri da 1 a 90</small>
+                        </div>
+
+                        <div class="actions">
+                            <button id="generateBtn" class="btn primary">
+                                <i class="fas fa-magic"></i> Genera Cartelle
+                            </button>
+                            <button id="printBtn" class="btn secondary" disabled>
+                                <i class="fas fa-print"></i> Stampa Cartelle
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <button id="generateBtn" class="btn primary">Genera Cartelle</button>
-            <button id="printBtn" class="btn secondary" disabled>Stampa Cartelle</button>
-        </div>
+            <div id="alertContainer" class="alert-container"></div>
 
-        <div id="loading" class="loading hidden">
-            <div class="spinner"></div>
-            <p>Generazione in corso...</p>
-        </div>
+            <div id="loading" class="loading-container hidden">
+                <div class="loading-spinner"></div>
+                <p>Generazione in corso...</p>
+            </div>
 
-        <div id="cardsContainer" class="cards-container"></div>
+            <div id="cardsContainer" class="cards-container"></div>
+        </main>
+
+        <footer class="app-footer">
+            <p>&copy; 2025 Generatore Cartelle Tombola | <a href="#" id="aboutLink">Informazioni</a></p>
+        </footer>
     </div>
 
-    <footer>
-        <p>© 2025 Generatore Cartelle Tombola</p>
-    </footer>
+    <!-- Template per gli alert -->
+    <template id="alertTemplate">
+        <div class="alert">
+            <div class="alert-icon"></div>
+            <div class="alert-content">
+                <div class="alert-title"></div>
+                <div class="alert-message"></div>
+            </div>
+            <button class="alert-close"><i class="fas fa-times"></i></button>
+        </div>
+    </template>
+
+    <!-- Template per il modal -->
+    <div id="modalContainer" class="modal-container hidden">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Informazioni</h3>
+                <button class="modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p>Questo generatore di cartelle per la tombola crea set di 6 cartelle contenenti tutti i numeri da 1 a
+                    90.</p>
+                <p>Ogni cartella è composta da 3 righe e 9 colonne, con 5 numeri per riga (15 numeri totali).</p>
+                <p>Le cartelle sono pronte per essere stampate e utilizzate per il tuo gioco della tombola.</p>
+                <h4>Come utilizzare:</h4>
+                <ol>
+                    <li>Seleziona il numero di set da generare</li>
+                    <li>Clicca su "Genera Cartelle"</li>
+                    <li>Attendi il completamento della generazione</li>
+                    <li>Clicca su "Stampa Cartelle" per stampare</li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button class="btn primary modal-close-btn">Chiudi</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
