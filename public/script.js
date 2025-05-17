@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
   async function generateCards() {
     const numSets = Number.parseInt(numSetsInput.value);
 
-    if (numSets < 1 || numSets > 10) {
-      alert("Inserisci un numero di set valido (1-10)");
+    if (numSets < 1 || numSets > 25) {
+      alert("Inserisci un numero di set valido (1-25)");
       return;
     }
 
