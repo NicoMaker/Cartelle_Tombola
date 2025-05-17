@@ -345,3 +345,107 @@ function createCardElement(card) {
 
   return cardElement;
 }
+
+/**
+ * Visualizza le cartelle generate
+ * @param {Array} sets - Array di set di cartelle
+ */
+function renderCards(sets) {
+  cardsContainer.innerHTML = "";
+
+  // Aggiungi l'intestazione principale per la stampa
+  const printHeader = document.createElement("div");
+  printHeader.className = "print-header";
+  printHeader.textContent = "CARTELLE TOMBOLA";
+  printHeader.style.display = "none"; // Nascondi nell'interfaccia normale
+  cardsContainer.appendChild(printHeader);
+
+  sets.forEach((set) => {
+    // Crea un contenitore per il set
+    const setContainer = document.createElement("div");
+    setContainer.className = "card-set";
+    setContainer.setAttribute("data-set", set[0].setNumber);
+
+    // Titolo del set
+    const setTitle = document.createElement("h2");
+    setTitle.className = "set-title";
+    setTitle.innerHTML = `<i class="fas fa-folder"></i> Set #${set[0].setNumber}`;
+    setContainer.appendChild(setTitle);
+
+    // Contenitore per le cartelle del set (griglia)
+    const cardsGrid = document.createElement("div");
+    cardsGrid.className = "cards-grid";
+    
+    // Stile per la visualizzazione normale (non in stampa)
+    cardsGrid.style.display = "grid";
+    cardsGrid.style.gridTemplateColumns = "repeat(auto-fit, minmax(300px, 1fr))";
+    cardsGrid.style.gap = "15px";
+
+    // Crea le cartelle del set
+    set.forEach((card) => {
+      const cardElement = createCardElement(card);
+      cardsGrid.appendChild(cardElement);
+    });
+
+    setContainer.appendChild(cardsGrid);
+    cardsContainer.appendChild(setContainer);
+  });
+
+  // Mostra l'intestazione di stampa solo quando si stampa
+  window.addEventListener("beforeprint", () => {
+    printHeader.style.display = "block";
+  });
+  
+  window.addEventListener("afterprint", () => {
+    printHeader.style.display = "none";
+  });
+}
+
+/**
+ * Crea l'elemento HTML per una cartella
+ * @param {Object} card - Dati della cartella
+ * @returns {HTMLElement} Elemento della cartella
+ */
+function createCardElement(card) {
+  const cardElement = document.createElement("div");
+  cardElement.className = "tombola-card";
+  cardElement.setAttribute("data-card-id", card.id);
+  cardElement.setAttribute("data-set", card.setNumber);
+
+  // Header della cartella
+  const cardHeader = document.createElement("div");
+  cardHeader.className = "card-header";
+  cardHeader.textContent = `Cartella #${card.id}`;
+  cardElement.appendChild(cardHeader);
+
+  // Griglia della cartella
+  const table = document.createElement("table");
+  table.className = "card-grid";
+
+  const tbody = document.createElement("tbody");
+
+  // Crea le righe della cartella
+  for (let row = 0; row < 3; row++) {
+    const tr = document.createElement("tr");
+
+    // Crea le celle della riga
+    for (let col = 0; col < 9; col++) {
+      const td = document.createElement("td");
+      const value = card.grid[row][col];
+
+      if (value !== null) {
+        td.textContent = value;
+        td.className = "filled";
+      }
+
+      tr.appendChild(td);
+    }
+
+    tbody.appendChild(tr);
+  }
+
+  table.appendChild(tbody);
+  cardElement.appendChild(table);
+
+  return cardElement;
+}
