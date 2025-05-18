@@ -14,6 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalCloseX = document.querySelector(".modal-close")
   const navLinks = document.querySelectorAll(".app-nav a")
   const sections = document.querySelectorAll(".section-container")
+  const sumcartelle = 25;
+
+  // Imposta l'attributo max sull'input
+  const inputGiocatori = document.getElementById("numGiocatori");
+  inputGiocatori.max = sumcartelle;
 
   // Event listeners
   generateBtn.addEventListener("click", generateCards)
@@ -118,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function updateNumGiocatori(delta) {
     const currentValue = Number.parseInt(numGiocatoriInput.value) || 1
-    const newValue = Math.max(1, Math.min(501, currentValue + delta))
+    const newValue = Math.max(1, Math.min(sumcartelle, currentValue + delta))
     numGiocatoriInput.value = newValue
   }
 
@@ -149,8 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
   async function generateCards() {
     const numGiocatori = Number.parseInt(numGiocatoriInput.value)
 
-    if (numGiocatori < 1 || numGiocatori > 501) {
-      showAlert("error", "Errore", "Inserisci un numero di giocatori valido (1-501)")
+    if (numGiocatori < 1 || numGiocatori > sumcartelle) {
+      showAlert("error", "Errore", "Inserisci un numero di giocatori valido (1-sumcartelle)")
       return
     }
 
