@@ -2,7 +2,7 @@
 
 ## Descrizione del Progetto
 
-Questo progetto è un'applicazione web per generare e stampare cartelle della tombola italiana. Ogni set di 6 cartelle contiene tutti i numeri da 1 a 90, distribuiti secondo le regole tradizionali della tombola (3 righe e 9 colonne per cartella, con 5 numeri per riga).
+Questo progetto è un'applicazione web per generare e stampare cartelle della tombola italiana. Ogni Giocatori di 6 cartelle contiene tutti i numeri da 1 a 90, distribuiti secondo le regole tradizionali della tombola (3 righe e 9 colonne per cartella, con 5 numeri per riga).
 
 ## Requisiti di sistema
 
@@ -64,8 +64,8 @@ La pagina index.html è strutturata in diverse sezioni per facilitare l'interazi
 1. **Pannello di controllo (`control-panel`)**
 
 1. Card con le impostazioni
-1. Selettore per il numero di set da generare
-1. Pulsanti per aumentare/diminuire il numero di set
+1. Selettore per il numero di Giocatori da generare
+1. Pulsanti per aumentare/diminuire il numero di Giocatori
 1. Pulsante "Genera Cartelle" per avviare la generazione
 1. Pulsante "Stampa Cartelle" per stampare le cartelle generate
 
@@ -77,8 +77,8 @@ La pagina index.html è strutturata in diverse sezioni per facilitare l'interazi
 1. **Contenitore delle cartelle (`cards-container`)**
 
 1. Area dove vengono visualizzate le cartelle generate
-1. Organizzata in set, con ogni set contenente 6 cartelle
-1. Ogni set ha un titolo con il numero del set
+1. Organizzata in Giocatori, con ogni Giocatori contenente 6 cartelle
+1. Ogni Giocatori ha un titolo con il numero del Giocatori
 
 1. **Sistema di alert (`alert-container`)**
 
@@ -100,12 +100,12 @@ La pagina index.html è strutturata in diverse sezioni per facilitare l'interazi
 
 Quando apri l'applicazione, vedrai il pannello di controllo nella parte superiore della pagina:
 
-- **Numero di set da generare**: Puoi impostare quanti set di cartelle vuoi generare (da 1 a 501)
+- **Numero di Giocatori da generare**: Puoi impostare quanti Giocatori di cartelle vuoi generare (da 1 a 501)
 
 - Usa i pulsanti `-` e `+` per diminuire o aumentare il numero
 - Oppure inserisci direttamente il numero nell'input
 
-- **Pulsante "Genera Cartelle"**: Cliccando su questo pulsante, l'applicazione inizierà a generare i set di cartelle richiesti
+- **Pulsante "Genera Cartelle"**: Cliccando su questo pulsante, l'applicazione inizierà a generare i Giocatori di cartelle richiesti
 
 - Durante la generazione, vedrai un indicatore di caricamento
 
@@ -117,10 +117,10 @@ Quando apri l'applicazione, vedrai il pannello di controllo nella parte superior
 
 Dopo aver cliccato su "Genera Cartelle" e completato la generazione, le cartelle appariranno nella parte inferiore della pagina:
 
-- **Organizzazione in Set**: Le cartelle sono organizzate in set, con ogni set contenente 6 cartelle
+- **Organizzazione in Giocatori**: Le cartelle sono organizzate in Giocatori, con ogni Giocatori contenente 6 cartelle
 
-- Ogni set ha un titolo "Set #X" dove X è il numero del set
-- I set sono separati visivamente per facilitare la navigazione
+- Ogni Giocatori ha un titolo "Giocatori #X" dove X è il numero del Giocatori
+- I Giocatori sono separati visivamente per facilitare la navigazione
 
 - **Visualizzazione delle Cartelle**: Ogni cartella mostra:
 
@@ -137,7 +137,7 @@ Quando clicchi sul pulsante "Stampa Cartelle":
 - Le cartelle sono formattate specificamente per la stampa:
 
 - 2 cartelle per riga
-- Ogni set inizia su una nuova pagina
+- Ogni Giocatori inizia su una nuova pagina
 - L'intestazione "CARTELLE TOMBOLA" appare all'inizio della stampa
 - I colori e i bordi sono ottimizzati per la stampa
 
@@ -168,14 +168,14 @@ Puoi chiudere il modal cliccando sul pulsante "Chiudi", sulla X nell'angolo in a
 
 Il processo di generazione delle cartelle avviene in questi passaggi:
 
-1. Quando clicchi su "Genera Cartelle", l'applicazione invia una richiesta POST all'endpoint `/api/generate` con il numero di set richiesti
-2. Il server utilizza l'algoritmo in `tombola-generator.js` per generare i set di cartelle
+1. Quando clicchi su "Genera Cartelle", l'applicazione invia una richiesta POST all'endpoint `/api/generate` con il numero di Giocatori richiesti
+2. Il server utilizza l'algoritmo in `tombola-generator.js` per generare i Giocatori di cartelle
 3. L'algoritmo:
 
 4. Crea un array con tutti i numeri da 1 a 90
 5. Mescola i numeri in modo casuale
 6. Divide i numeri in 9 colonne secondo le regole della tombola
-7. Distribuisce i numeri nelle 6 cartelle di ogni set
+7. Distribuisce i numeri nelle 6 cartelle di ogni Giocatori
 8. Assicura che ogni riga abbia esattamente 5 numeri
 9. Formatta le cartelle per la risposta
 
@@ -201,7 +201,7 @@ La funzionalità di stampa utilizza i CSS media queries per ottimizzare il layou
 
 - Nasconde elementi non necessari (header, footer, pulsanti)
 - Ridimensiona le cartelle per adattarle alla pagina
-- Aggiunge interruzioni di pagina tra i set
+- Aggiunge interruzioni di pagina tra i Giocatori
 - Mantiene i colori e i bordi per una migliore leggibilità
 
 ## Risoluzione dei Problemi Comuni
@@ -214,7 +214,7 @@ La funzionalità di stampa utilizza i CSS media queries per ottimizzare il layou
 
 ### Le cartelle non vengono generate
 
-- Verifica che il numero di set sia valido (tra 1 e 501)
+- Verifica che il numero di Giocatori sia valido (tra 1 e 501)
 - Controlla la console del browser per eventuali errori JavaScript
 - Verifica che il server sia in esecuzione
 

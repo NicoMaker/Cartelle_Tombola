@@ -1,32 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Elementi DOM
-  const numSetsInput = document.getElementById("numSets");
-  const decreaseBtn = document.querySelector(".decrease");
-  const increaseBtn = document.querySelector(".increase");
-  const generateBtn = document.getElementById("generateBtn");
-  const printBtn = document.getElementById("printBtn");
-  const loadingEl = document.getElementById("loading");
-  const cardsContainer = document.getElementById("cardsContainer");
-  const aboutLink = document.getElementById("aboutLink");
-  const modalContainer = document.getElementById("modalContainer");
-  const modalCloseBtn = document.querySelector(".modal-close-btn");
-  const modalCloseX = document.querySelector(".modal-close");
+  const numGiocatoriInput = document.getElementById("numGiocatori")
+  const decreaseBtn = document.querySelector(".decrease")
+  const increaseBtn = document.querySelector(".increase")
+  const generateBtn = document.getElementById("generateBtn")
+  const printBtn = document.getElementById("printBtn")
+  const loadingEl = document.getElementById("loading")
+  const cardsContainer = document.getElementById("cardsContainer")
+  const aboutLink = document.getElementById("aboutLink")
+  const modalContainer = document.getElementById("modalContainer")
+  const modalCloseBtn = document.querySelector(".modal-close-btn")
+  const modalCloseX = document.querySelector(".modal-close")
 
   // Event listeners
-  generateBtn.addEventListener("click", generateCards);
-  printBtn.addEventListener("click", () => window.print());
-  decreaseBtn.addEventListener("click", () => updateNumSets(-1));
-  increaseBtn.addEventListener("click", () => updateNumSets(1));
-  aboutLink.addEventListener("click", showModal);
-  modalCloseBtn.addEventListener("click", hideModal);
-  modalCloseX.addEventListener("click", hideModal);
+  generateBtn.addEventListener("click", generateCards)
+  printBtn.addEventListener("click", () => window.print())
+  decreaseBtn.addEventListener("click", () => updateNumGiocatori(-1))
+  increaseBtn.addEventListener("click", () => updateNumGiocatori(1))
+  aboutLink.addEventListener("click", showModal)
+  modalCloseBtn.addEventListener("click", hideModal)
+  modalCloseX.addEventListener("click", hideModal)
   modalContainer.addEventListener("click", (e) => {
-    if (e.target === modalContainer) hideModal();
-  });
+    if (e.target === modalContainer) hideModal()
+  })
 
   // Sistema di alert
-  const alertContainer = document.getElementById("alertContainer");
-  const alertTemplate = document.getElementById("alertTemplate");
+  const alertContainer = document.getElementById("alertContainer")
+  const alertTemplate = document.getElementById("alertTemplate")
 
   /**
    * Mostra un alert
@@ -36,102 +36,102 @@ document.addEventListener("DOMContentLoaded", () => {
    * @param {number} duration - Durata in millisecondi (0 per non chiudere automaticamente)
    */
   function showAlert(type, title, message, duration = 5000) {
-    const alert = alertTemplate.content.cloneNode(true).querySelector(".alert");
-    alert.classList.add(`alert-${type}`);
+    const alert = alertTemplate.content.cloneNode(true).querySelector(".alert")
+    alert.classList.add(`alert-${type}`)
 
-    const iconElement = alert.querySelector(".alert-icon");
-    const titleElement = alert.querySelector(".alert-title");
-    const messageElement = alert.querySelector(".alert-message");
-    const closeButton = alert.querySelector(".alert-close");
+    const iconElement = alert.querySelector(".alert-icon")
+    const titleElement = alert.querySelector(".alert-title")
+    const messageElement = alert.querySelector(".alert-message")
+    const closeButton = alert.querySelector(".alert-close")
 
     // Imposta l'icona in base al tipo
-    let icon;
+    let icon
     switch (type) {
       case "success":
-        icon = "fa-check-circle";
-        break;
+        icon = "fa-check-circle"
+        break
       case "error":
-        icon = "fa-exclamation-circle";
-        break;
+        icon = "fa-exclamation-circle"
+        break
       case "warning":
-        icon = "fa-exclamation-triangle";
-        break;
+        icon = "fa-exclamation-triangle"
+        break
       case "info":
       default:
-        icon = "fa-info-circle";
+        icon = "fa-info-circle"
     }
 
-    iconElement.innerHTML = `<i class="fas ${icon}"></i>`;
-    titleElement.textContent = title;
-    messageElement.textContent = message;
+    iconElement.innerHTML = `<i class="fas ${icon}"></i>`
+    titleElement.textContent = title
+    messageElement.textContent = message
 
     // Aggiungi l'alert al container
-    alertContainer.appendChild(alert);
+    alertContainer.appendChild(alert)
 
     // Gestisci la chiusura
     const closeAlert = () => {
-      alert.classList.add("closing");
+      alert.classList.add("closing")
       setTimeout(() => {
-        alert.remove();
-      }, 300);
-    };
+        alert.remove()
+      }, 300)
+    }
 
-    closeButton.addEventListener("click", closeAlert);
+    closeButton.addEventListener("click", closeAlert)
 
     // Chiudi automaticamente dopo la durata specificata
     if (duration > 0) {
-      setTimeout(closeAlert, duration);
+      setTimeout(closeAlert, duration)
     }
 
-    return alert;
+    return alert
   }
 
   /**
-   * Aggiorna il valore del numero di set
+   * Aggiorna il valore del numero di giocatori
    * @param {number} delta - Valore da aggiungere/sottrarre
    */
-  function updateNumSets(delta) {
-    const currentValue = parseInt(numSetsInput.value) || 1;
-    const newValue = Math.max(1, Math.min(501, currentValue + delta));
-    numSetsInput.value = newValue;
+  function updateNumGiocatori(delta) {
+    const currentValue = Number.parseInt(numGiocatoriInput.value) || 1
+    const newValue = Math.max(1, Math.min(501, currentValue + delta))
+    numGiocatoriInput.value = newValue
   }
 
   /**
    * Mostra il modal informativo
    */
   function showModal(e) {
-    if (e) e.preventDefault();
-    modalContainer.classList.remove("hidden");
+    if (e) e.preventDefault()
+    modalContainer.classList.remove("hidden")
     setTimeout(() => {
-      modalContainer.classList.add("visible");
-    }, 10);
+      modalContainer.classList.add("visible")
+    }, 10)
   }
 
   /**
    * Nasconde il modal
    */
   function hideModal() {
-    modalContainer.classList.remove("visible");
+    modalContainer.classList.remove("visible")
     setTimeout(() => {
-      modalContainer.classList.add("hidden");
-    }, 300);
+      modalContainer.classList.add("hidden")
+    }, 300)
   }
 
   /**
    * Genera le cartelle della tombola
    */
   async function generateCards() {
-    const numSets = Number.parseInt(numSetsInput.value);
+    const numGiocatori = Number.parseInt(numGiocatoriInput.value)
 
-    if (numSets < 1 || numSets >501) {
-      showAlert("error", "Errore", "Inserisci un numero di set valido (1-501)");
-      return;
+    if (numGiocatori < 1 || numGiocatori > 501) {
+      showAlert("error", "Errore", "Inserisci un numero di giocatori valido (1-501)")
+      return
     }
 
     // Mostra il loading
-    loadingEl.classList.remove("hidden");
-    cardsContainer.innerHTML = "";
-    printBtn.disabled = true;
+    loadingEl.classList.remove("hidden")
+    cardsContainer.innerHTML = ""
+    printBtn.disabled = true
 
     try {
       const response = await fetch("/api/generate", {
@@ -139,68 +139,86 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ numSets }),
-      });
+        body: JSON.stringify({ numGiocatori }),
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (!data.success) {
-        throw new Error(data.error || "Errore nella generazione delle cartelle");
+        throw new Error(data.error || "Errore nella generazione delle cartelle")
       }
 
       // Visualizza le cartelle
-      renderCards(data.sets);
+      renderCards(data.giocatori)
 
       // Abilita il pulsante di stampa
-      printBtn.disabled = false;
+      printBtn.disabled = false
 
       // Mostra un alert di successo
-      showAlert(
-        "success",
-        "Generazione completata",
-        `Sono stati generati ${numSets} set di cartelle.`
-      );
+      showAlert("success", "Generazione completata", `Sono stati generati ${numGiocatori} giocatori di cartelle.`)
 
       // Scorri fino alle cartelle
       setTimeout(() => {
-        cardsContainer.scrollIntoView({ behavior: "smooth" });
-      }, 500);
-
+        cardsContainer.scrollIntoView({ behavior: "smooth" })
+      }, 500)
     } catch (error) {
-      console.error("Errore:", error);
-      showAlert("error", "Errore", `Si è verificato un errore: ${error.message}`);
+      console.error("Errore:", error)
+      showAlert("error", "Errore", `Si è verificato un errore: ${error.message}`)
     } finally {
       // Nascondi il loading
-      loadingEl.classList.add("hidden");
+      loadingEl.classList.add("hidden")
     }
   }
 
   /**
    * Visualizza le cartelle generate
-   * @param {Array} sets - Array di set di cartelle
+   * @param {Array} giocatori - Array di giocatore di cartelle
    */
-  function renderCards(sets) {
-    cardsContainer.innerHTML = "";
+  function renderCards(giocatori) {
+    cardsContainer.innerHTML = ""
 
-    sets.forEach((set) => {
-      // Crea un contenitore per il set
-      const setContainer = document.createElement("div");
-      setContainer.className = "card-set";
+    // Aggiungi l'intestazione principale per la stampa
+    const printHeader = document.createElement("div")
 
-      // Titolo del set
-      const setTitle = document.createElement("h2");
-      setTitle.className = "set-title";
-      setTitle.innerHTML = `<i class="fas fa-folder"></i> Set #${set[0].setNumber}`;
-      setContainer.appendChild(setTitle);
+    giocatori.forEach((giocatore) => {
+      // Crea un contenitore per il giocatore
+      const setContainer = document.createElement("div")
+      setContainer.className = "card-giocatore"
+      setContainer.setAttribute("data-giocatore", giocatore[0].setNumber)
 
-      // Crea le cartelle del set
-      set.forEach((card) => {
-        const cardElement = createCardElement(card);
-        setContainer.appendChild(cardElement);
-      });
+      // Titolo del giocatore
+      const setTitle = document.createElement("h2")
+      setTitle.className = "giocatore-title"
+      setTitle.innerHTML = `<i class="fas fa-folder"></i> Giocatore #${giocatore[0].setNumber}`
+      setContainer.appendChild(setTitle)
 
-      cardsContainer.appendChild(setContainer);
-    });
+      // Contenitore per le cartelle del giocatore (griglia)
+      const cardsGrid = document.createElement("div")
+      cardsGrid.className = "cards-grid"
+
+      // Stile per la visualizzazione normale (non in stampa)
+      cardsGrid.style.display = "grid"
+      cardsGrid.style.gridTemplateColumns = "repeat(auto-fit, minmax(300px, 1fr))"
+      cardsGrid.style.gap = "15px"
+
+      // Crea le cartelle del giocatore
+      giocatore.forEach((card) => {
+        const cardElement = createCardElement(card)
+        cardsGrid.appendChild(cardElement)
+      })
+
+      setContainer.appendChild(cardsGrid)
+      cardsContainer.appendChild(setContainer)
+    })
+
+    // Mostra l'intestazione di stampa solo quando si stampa
+    window.addEventListener("beforeprint", () => {
+      printHeader.style.display = "block"
+    })
+
+    window.addEventListener("afterprint", () => {
+      printHeader.style.display = "none"
+    })
   }
 
   /**
@@ -209,45 +227,47 @@ document.addEventListener("DOMContentLoaded", () => {
    * @returns {HTMLElement} Elemento della cartella
    */
   function createCardElement(card) {
-    const cardElement = document.createElement("div");
-    cardElement.className = "tombola-card";
+    const cardElement = document.createElement("div")
+    cardElement.className = "tombola-card"
+    cardElement.setAttribute("data-card-id", card.id)
+    cardElement.setAttribute("data-giocatore", card.setNumber)
 
     // Header della cartella
-    const cardHeader = document.createElement("div");
-    cardHeader.className = "card-header";
-    cardHeader.textContent = `Cartella #${card.id}`;
-    cardElement.appendChild(cardHeader);
+    const cardHeader = document.createElement("div")
+    cardHeader.className = "card-header"
+    cardHeader.textContent = `Cartella #${card.id}`
+    cardElement.appendChild(cardHeader)
 
     // Griglia della cartella
-    const table = document.createElement("table");
-    table.className = "card-grid";
+    const table = document.createElement("table")
+    table.className = "card-grid"
 
-    const tbody = document.createElement("tbody");
+    const tbody = document.createElement("tbody")
 
     // Crea le righe della cartella
     for (let row = 0; row < 3; row++) {
-      const tr = document.createElement("tr");
+      const tr = document.createElement("tr")
 
       // Crea le celle della riga
       for (let col = 0; col < 9; col++) {
-        const td = document.createElement("td");
-        const value = card.grid[row][col];
+        const td = document.createElement("td")
+        const value = card.grid[row][col]
 
         if (value !== null) {
-          td.textContent = value;
-          td.className = "filled";
+          td.textContent = value
+          td.className = "filled"
         }
 
-        tr.appendChild(td);
+        tr.appendChild(td)
       }
 
-      tbody.appendChild(tr);
+      tbody.appendChild(tr)
     }
 
-    table.appendChild(tbody);
-    cardElement.appendChild(table);
+    table.appendChild(tbody)
+    cardElement.appendChild(table)
 
-    return cardElement;
+    return cardElement
   }
 
   // Mostra un alert di benvenuto
@@ -255,197 +275,13 @@ document.addEventListener("DOMContentLoaded", () => {
     showAlert(
       "info",
       "Benvenuto",
-      "Genera facilmente cartelle per la tua tombola. Seleziona il numero di set e clicca su Genera."
-    );
-  }, 500);
-});
+      "Genera facilmente cartelle per la tua tombola. Seleziona il numero di giocatori e clicca su Genera."
+    )
+  }, 500)
 
-/**
- * Visualizza le cartelle generate
- * @param {Array} sets - Array di set di cartelle
- */
-function renderCards(sets) {
-  cardsContainer.innerHTML = "";
-
-  sets.forEach((set) => {
-    // Crea un contenitore per il set
-    const setContainer = document.createElement("div");
-    setContainer.className = "card-set";
-    setContainer.setAttribute("data-set", set[0].setNumber);
-
-    // Titolo del set
-    const setTitle = document.createElement("h2");
-    setTitle.className = "set-title";
-    setTitle.innerHTML = `<i class="fas fa-folder"></i> Set #${set[0].setNumber}`;
-    setContainer.appendChild(setTitle);
-
-    // Contenitore per le cartelle del set
-    const cardsGrid = document.createElement("div");
-    cardsGrid.className = "cards-grid";
-    cardsGrid.style.display = "grid";
-    cardsGrid.style.gridTemplateColumns = "repeat(auto-fit, minmax(300px, 1fr))";
-    cardsGrid.style.gap = "15px";
-
-    // Crea le cartelle del set
-    set.forEach((card) => {
-      const cardElement = createCardElement(card);
-      cardsGrid.appendChild(cardElement);
-    });
-
-    setContainer.appendChild(cardsGrid);
-    cardsContainer.appendChild(setContainer);
-  });
-}
-
-/**
- * Crea l'elemento HTML per una cartella
- * @param {Object} card - Dati della cartella
- * @returns {HTMLElement} Elemento della cartella
- */
-function createCardElement(card) {
-  const cardElement = document.createElement("div");
-  cardElement.className = "tombola-card";
-  cardElement.setAttribute("data-card-id", card.id);
-  cardElement.setAttribute("data-set", card.setNumber);
-
-  // Header della cartella
-  const cardHeader = document.createElement("div");
-  cardHeader.className = "card-header";
-  cardHeader.textContent = `Cartella #${card.id}`;
-  cardElement.appendChild(cardHeader);
-
-  // Griglia della cartella
-  const table = document.createElement("table");
-  table.className = "card-grid";
-
-  const tbody = document.createElement("tbody");
-
-  // Crea le righe della cartella
-  for (let row = 0; row < 3; row++) {
-    const tr = document.createElement("tr");
-
-    // Crea le celle della riga
-    for (let col = 0; col < 9; col++) {
-      const td = document.createElement("td");
-      const value = card.grid[row][col];
-
-      if (value !== null) {
-        td.textContent = value;
-        td.className = "filled";
-      }
-
-      tr.appendChild(td);
-    }
-
-    tbody.appendChild(tr);
+  // Aggiorna il testo della descrizione
+  const descriptionText = document.querySelector(".form-group small")
+  if (descriptionText) {
+    descriptionText.textContent = "Ogni giocatore contiene 6 cartelle con tutti i numeri da 1 a 90"
   }
-
-  table.appendChild(tbody);
-  cardElement.appendChild(table);
-
-  return cardElement;
-}
-
-/**
- * Visualizza le cartelle generate
- * @param {Array} sets - Array di set di cartelle
- */
-function renderCards(sets) {
-  cardsContainer.innerHTML = "";
-
-  // Aggiungi l'intestazione principale per la stampa
-  const printHeader = document.createElement("div");
-  printHeader.className = "print-header";
-  printHeader.textContent = "CARTELLE TOMBOLA";
-  printHeader.style.display = "none"; // Nascondi nell'interfaccia normale
-  cardsContainer.appendChild(printHeader);
-
-  sets.forEach((set) => {
-    // Crea un contenitore per il set
-    const setContainer = document.createElement("div");
-    setContainer.className = "card-set";
-    setContainer.setAttribute("data-set", set[0].setNumber);
-
-    // Titolo del set
-    const setTitle = document.createElement("h2");
-    setTitle.className = "set-title";
-    setTitle.innerHTML = `<i class="fas fa-folder"></i> Set #${set[0].setNumber}`;
-    setContainer.appendChild(setTitle);
-
-    // Contenitore per le cartelle del set (griglia)
-    const cardsGrid = document.createElement("div");
-    cardsGrid.className = "cards-grid";
-    
-    // Stile per la visualizzazione normale (non in stampa)
-    cardsGrid.style.display = "grid";
-    cardsGrid.style.gridTemplateColumns = "repeat(auto-fit, minmax(300px, 1fr))";
-    cardsGrid.style.gap = "15px";
-
-    // Crea le cartelle del set
-    set.forEach((card) => {
-      const cardElement = createCardElement(card);
-      cardsGrid.appendChild(cardElement);
-    });
-
-    setContainer.appendChild(cardsGrid);
-    cardsContainer.appendChild(setContainer);
-  });
-
-  // Mostra l'intestazione di stampa solo quando si stampa
-  window.addEventListener("beforeprint", () => {
-    printHeader.style.display = "block";
-  });
-  
-  window.addEventListener("afterprint", () => {
-    printHeader.style.display = "none";
-  });
-}
-
-/**
- * Crea l'elemento HTML per una cartella
- * @param {Object} card - Dati della cartella
- * @returns {HTMLElement} Elemento della cartella
- */
-function createCardElement(card) {
-  const cardElement = document.createElement("div");
-  cardElement.className = "tombola-card";
-  cardElement.setAttribute("data-card-id", card.id);
-  cardElement.setAttribute("data-set", card.setNumber);
-
-  // Header della cartella
-  const cardHeader = document.createElement("div");
-  cardHeader.className = "card-header";
-  cardHeader.textContent = `Cartella #${card.id}`;
-  cardElement.appendChild(cardHeader);
-
-  // Griglia della cartella
-  const table = document.createElement("table");
-  table.className = "card-grid";
-
-  const tbody = document.createElement("tbody");
-
-  // Crea le righe della cartella
-  for (let row = 0; row < 3; row++) {
-    const tr = document.createElement("tr");
-
-    // Crea le celle della riga
-    for (let col = 0; col < 9; col++) {
-      const td = document.createElement("td");
-      const value = card.grid[row][col];
-
-      if (value !== null) {
-        td.textContent = value;
-        td.className = "filled";
-      }
-
-      tr.appendChild(td);
-    }
-
-    tbody.appendChild(tr);
-  }
-
-  table.appendChild(tbody);
-  cardElement.appendChild(table);
-
-  return cardElement;
-}
+})
