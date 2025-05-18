@@ -597,6 +597,79 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
+/* Pagina di copertina per la stampa */
+.print-cover-page {
+  display: none; /* Nascosto nell'interfaccia normale */
+  text-align: center;
+  padding: 2cm;
+  height: 100vh;
+  page-break-after: always;
+}
+
+.print-cover-title {
+  font-size: 48px;
+  color: var(--primary-color);
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.print-cover-logo {
+  font-size: 80px;
+  color: var(--primary-color);
+  margin: 30px 0;
+}
+
+.print-cover-subtitle {
+  font-size: 24px;
+  color: var(--text-color);
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--primary-color);
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.print-cover-rules {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.print-cover-section {
+  margin-bottom: 30px;
+}
+
+.print-cover-section h3 {
+  color: var(--primary-color);
+  font-size: 20px;
+  margin-bottom: 10px;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 10px;
+}
+
+.print-cover-section p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.print-cover-section ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.print-cover-section li {
+  margin-bottom: 8px;
+}
+
+.print-cover-footer {
+  margin-top: 50px;
+  font-size: 14px;
+  color: var(--text-light);
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+  text-align: center;
+}
+
 /* Stampa */
 @media print {
   body {
@@ -617,6 +690,14 @@ input[type="number"]::-webkit-inner-spin-button {
   .app-content {
     padding: 0;
     margin: 0;
+  }
+
+  /* Mostra la pagina di copertina */
+  .print-cover-page {
+    display: block !important;
+    height: 100vh;
+    page-break-after: always;
+    break-after: page;
   }
 
   /* Intestazione principale della stampa */

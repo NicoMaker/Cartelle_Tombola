@@ -171,14 +171,145 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
+   * Crea la pagina di copertina per la stampa con le regole
+   * @returns {HTMLElement} Elemento della pagina di copertina
+   */
+  function createPrintCoverPage() {
+    const coverPage = document.createElement("div")
+    coverPage.className = "print-cover-page"
+    coverPage.style.display = "none" // Nascondi nell'interfaccia normale
+
+    // Titolo principale
+    const mainTitle = document.createElement("h1")
+    mainTitle.className = "print-cover-title"
+    mainTitle.textContent = "CARTELLE TOMBOLA"
+    coverPage.appendChild(mainTitle)
+
+    // Logo/Icona
+    const logoContainer = document.createElement("div")
+    logoContainer.className = "print-cover-logo"
+    logoContainer.innerHTML = '<i class="fas fa-dice"></i>'
+    coverPage.appendChild(logoContainer)
+
+    // Sottotitolo
+    const subtitle = document.createElement("h2")
+    subtitle.className = "print-cover-subtitle"
+    subtitle.textContent = "Istruzioni e Regole del Gioco"
+    coverPage.appendChild(subtitle)
+
+    // Contenitore delle regole
+    const rulesContainer = document.createElement("div")
+    rulesContainer.className = "print-cover-rules"
+
+    // Sezione: Contenuto delle cartelle
+    const contentSection = document.createElement("div")
+    contentSection.className = "print-cover-section"
+
+    const contentTitle = document.createElement("h3")
+    contentTitle.textContent = "Contenuto delle Cartelle"
+    contentSection.appendChild(contentTitle)
+
+    const contentText = document.createElement("p")
+    contentText.innerHTML = `
+      Ogni giocatore riceve un set di 6 cartelle. Ogni set contiene tutti i numeri da 1 a 90, 
+      distribuiti in modo che ogni cartella abbia 15 numeri (5 numeri per riga). 
+      Le cartelle sono numerate progressivamente e raggruppate per giocatore.
+    `
+    contentSection.appendChild(contentText)
+    rulesContainer.appendChild(contentSection)
+
+    // Sezione: Come si gioca
+    const howToPlaySection = document.createElement("div")
+    howToPlaySection.className = "print-cover-section"
+
+    const howToPlayTitle = document.createElement("h3")
+    howToPlayTitle.textContent = "Come si Gioca"
+    howToPlaySection.appendChild(howToPlayTitle)
+
+    const howToPlayText = document.createElement("p")
+    howToPlayText.innerHTML = `
+      Il conduttore estrae a sorte i numeri da 1 a 90, uno alla volta. I giocatori controllano 
+      se il numero estratto è presente nelle loro cartelle e lo segnano. Vince chi per primo realizza 
+      una delle seguenti combinazioni:
+    `
+    howToPlaySection.appendChild(howToPlayText)
+
+    const combinationsList = document.createElement("ul")
+
+    const amboItem = document.createElement("li")
+    amboItem.textContent = "Ambo: 2 numeri sulla stessa riga"
+    combinationsList.appendChild(amboItem)
+
+    const ternoItem = document.createElement("li")
+    ternoItem.textContent = "Terno: 3 numeri sulla stessa riga"
+    combinationsList.appendChild(ternoItem)
+
+    const quaternaItem = document.createElement("li")
+    quaternaItem.textContent = "Quaterna: 4 numeri sulla stessa riga"
+    combinationsList.appendChild(quaternaItem)
+
+    const cinquinaItem = document.createElement("li")
+    cinquinaItem.textContent = "Cinquina: 5 numeri sulla stessa riga (riga completa)"
+    combinationsList.appendChild(cinquinaItem)
+
+    const tombolaItem = document.createElement("li")
+    tombolaItem.textContent = "Tombola: tutti i 15 numeri di una cartella"
+    combinationsList.appendChild(tombolaItem)
+
+    howToPlaySection.appendChild(combinationsList)
+    rulesContainer.appendChild(howToPlaySection)
+
+    // Sezione: Suggerimenti per la stampa
+    const printTipsSection = document.createElement("div")
+    printTipsSection.className = "print-cover-section"
+
+    const printTipsTitle = document.createElement("h3")
+    printTipsTitle.textContent = "Suggerimenti per la Stampa"
+    printTipsSection.appendChild(printTipsTitle)
+
+    const printTipsList = document.createElement("ul")
+
+    const tip1 = document.createElement("li")
+    tip1.textContent = "Stampa in formato A4 per una migliore leggibilità"
+    printTipsList.appendChild(tip1)
+
+    const tip2 = document.createElement("li")
+    tip2.textContent = "Ogni giocatore inizia su una nuova pagina"
+    printTipsList.appendChild(tip2)
+
+    const tip3 = document.createElement("li")
+    tip3.textContent = "Utilizza carta di buona qualità per una maggiore durata"
+    printTipsList.appendChild(tip3)
+
+    const tip4 = document.createElement("li")
+    tip4.textContent = "Consigliato l'uso di pennarelli o segnalini per marcare i numeri estratti"
+    printTipsList.appendChild(tip4)
+
+    printTipsSection.appendChild(printTipsList)
+    rulesContainer.appendChild(printTipsSection)
+
+    // Nota a piè di pagina
+    const footer = document.createElement("div")
+    footer.className = "print-cover-footer"
+    footer.innerHTML = `
+      <p>Generato con il Generatore di Cartelle Tombola - ${new Date().toLocaleDateString()}</p>
+    `
+    rulesContainer.appendChild(footer)
+
+    coverPage.appendChild(rulesContainer)
+    return coverPage
+  }
+
+  /**
    * Visualizza le cartelle generate
    * @param {Array} giocatori - Array di giocatore di cartelle
    */
   function renderCards(giocatori) {
     cardsContainer.innerHTML = ""
 
-    // Aggiungi l'intestazione principale per la stampa
-    const printHeader = document.createElement("div")
+    // Crea la pagina di copertina per la stampa
+    const printCoverPage = createPrintCoverPage()
+    cardsContainer.appendChild(printCoverPage)
 
     giocatori.forEach((giocatore) => {
       // Crea un contenitore per il giocatore
@@ -211,12 +342,14 @@ document.addEventListener("DOMContentLoaded", () => {
       cardsContainer.appendChild(setContainer)
     })
 
-    // Mostra l'intestazione di stampa solo quando si stampa
+    // Mostra la copertina e l'intestazione solo quando si stampa
     window.addEventListener("beforeprint", () => {
+      printCoverPage.style.display = "block"
       printHeader.style.display = "block"
     })
 
     window.addEventListener("afterprint", () => {
+      printCoverPage.style.display = "none"
       printHeader.style.display = "none"
     })
   }
