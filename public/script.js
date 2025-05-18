@@ -8,9 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingEl = document.getElementById("loading")
   const cardsContainer = document.getElementById("cardsContainer")
   const aboutLink = document.getElementById("aboutLink")
+  const footerAboutLink = document.getElementById("footerAboutLink")
   const modalContainer = document.getElementById("modalContainer")
   const modalCloseBtn = document.querySelector(".modal-close-btn")
   const modalCloseX = document.querySelector(".modal-close")
+  const navLinks = document.querySelectorAll(".app-nav a")
+  const sections = document.querySelectorAll(".section-container")
 
   // Event listeners
   generateBtn.addEventListener("click", generateCards)
@@ -18,10 +21,33 @@ document.addEventListener("DOMContentLoaded", () => {
   decreaseBtn.addEventListener("click", () => updateNumGiocatori(-1))
   increaseBtn.addEventListener("click", () => updateNumGiocatori(1))
   aboutLink.addEventListener("click", showModal)
+  footerAboutLink.addEventListener("click", showModal)
   modalCloseBtn.addEventListener("click", hideModal)
   modalCloseX.addEventListener("click", hideModal)
   modalContainer.addEventListener("click", (e) => {
     if (e.target === modalContainer) hideModal()
+  })
+
+  // Gestione della navigazione
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      if (link.getAttribute("href").startsWith("#")) {
+        e.preventDefault()
+        const targetId = link.getAttribute("href").substring(1)
+
+        // Aggiorna la classe active sui link
+        navLinks.forEach((l) => l.classList.remove("active"))
+        link.classList.add("active")
+
+        // Mostra la sezione corrispondente
+        sections.forEach((section) => {
+          section.classList.remove("active")
+          if (section.id === targetId) {
+            section.classList.add("active")
+          }
+        })
+      }
+    })
   })
 
   // Sistema di alert
@@ -311,6 +337,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const printCoverPage = createPrintCoverPage()
     cardsContainer.appendChild(printCoverPage)
 
+
+
     giocatori.forEach((giocatore) => {
       // Crea un contenitore per il giocatore
       const setContainer = document.createElement("div")
@@ -408,7 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showAlert(
       "info",
       "Benvenuto",
-      "Genera facilmente cartelle per la tua tombola. Seleziona il numero di giocatori e clicca su Genera."
+      "Genera facilmente cartelle per la tua tombola. Seleziona il numero di giocatori e clicca su Genera.",
     )
   }, 500)
 
@@ -416,5 +444,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const descriptionText = document.querySelector(".form-group small")
   if (descriptionText) {
     descriptionText.textContent = "Ogni giocatore contiene 6 cartelle con tutti i numeri da 1 a 90"
+  }
+
+  // Aggiungi effetti di animazione alle cartelle quando vengono generate
+  const addCardAnimations = () => {
+    const cards = document.querySelectorAll(".tombola-card")
+    cards.forEach((card, index) => {
+      card.style.opacity = "0"
+      card.style.transform = "translateY(20px)"
+      setTimeout(() => {
+        card.style.transition = "opacity 0.5s ease, transform 0.5s ease"
+        card.style.opacity = "1"
+        card.style.transform = "translateY(0)"
+      }, index * 50)
+    })
+  }
+
+  // Sovrascrive la funzione renderCards per aggiungere le animazioni
+  const originalRenderCards = renderCards
+  renderCards = (giocatori) => {
+    originalRenderCards(giocatori)
+    addCardAnimations()
   }
 })
