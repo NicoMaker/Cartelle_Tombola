@@ -32,9 +32,9 @@
 
         <nav class="app-nav">
             <ul>
-                <li><a href="#generator" class="active"><i class="fas fa-magic"></i> Generatore</a></li>
-                <li><a href="#rules"><i class="fas fa-book"></i> Regole</a></li>
-                <li><a href="#" id="aboutLink"><i class="fas fa-info-circle"></i> Informazioni</a></li>
+                <li><a href="#generator" class="active"><i class="fas fa-magic"></i> <span>Generatore</span></a></li>
+                <li><a href="#rules"><i class="fas fa-book"></i> <span>Regole</span></a></li>
+                <li><a href="#" id="aboutLink"><i class="fas fa-info-circle"></i> <span>Informazioni</span></a></li>
             </ul>
         </nav>
 
@@ -53,7 +53,7 @@
                                     <button class="btn-icon decrease" aria-label="Diminuisci">
                                         <i class="fas fa-minus"></i>
                                     </button>
-                                    <input type="number" id="numGiocatori" min="1" value="1">
+                                    <input type="number" id="numGiocatori" min="1" max="300" value="1">
                                     <button class="btn-icon increase" aria-label="Aumenta">
                                         <i class="fas fa-plus"></i>
                                     </button>
@@ -216,11 +216,13 @@
                 <p>Le cartelle sono pronte per essere stampate e utilizzate per il tuo gioco della tombola.</p>
                 <h4>Come utilizzare:</h4>
                 <ol>
-                    <li>Seleziona il numero di set da generare</li>
+                    <li>Seleziona il numero di set da generare (fino a 300)</li>
                     <li>Clicca su "Genera Cartelle"</li>
                     <li>Attendi il completamento della generazione</li>
                     <li>Clicca su "Stampa Cartelle" per stampare</li>
                 </ol>
+                <p><strong>Nota per grandi volumi:</strong> La generazione di molti set (es. 100+) potrebbe richiedere
+                    alcuni secondi. La stampa di grandi volumi funziona meglio con Chrome o Edge.</p>
             </div>
             <div class="modal-footer">
                 <button class="btn primary modal-close-btn">Chiudi</button>
