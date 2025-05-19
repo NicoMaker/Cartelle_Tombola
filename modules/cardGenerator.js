@@ -1,7 +1,20 @@
+import { shuffleArray, distributeColumnNumbers, generateCardId } from "./utils.js"
+import { CARTELLE_PER_GIOCATORE } from "./config.js"
+
 /**
- * Generatore di cartelle della tombola
- * Ogni set di 6 cartelle contiene tutti i numeri da 1 a 90
+ * Genera un insieme di giocatori con le loro cartelle
+ * @param {number} numGiocatori - Numero di giocatori da generare
+ * @returns {Array} Array di giocatori con le loro cartelle
  */
+export function generateTombolaGiocatori(numGiocatori) {
+  const giocatori = []
+
+  for (let i = 1; i <= numGiocatori; i++) {
+    giocatori.push(generateTombolaGiocatore(i))
+  }
+
+  return giocatori
+}
 
 /**
  * Genera un giocatore di 6 cartelle della tombola con tutti i numeri da 1 a 90
@@ -32,7 +45,7 @@ export function generateTombolaGiocatore(giocatoreNumber) {
   columns.forEach((col) => shuffleArray(col))
 
   // Crea 6 cartelle vuote
-  const cards = Array(6)
+  const cards = Array(CARTELLE_PER_GIOCATORE)
     .fill()
     .map(() =>
       Array(3)
@@ -45,22 +58,11 @@ export function generateTombolaGiocatore(giocatoreNumber) {
 
   // Formatta le cartelle per la risposta
   return cards.map((card, index) => ({
-    id: (giocatoreNumber - 1) * 6 + index + 1,
+    id: generateCardId(giocatoreNumber, index),
     setNumber: giocatoreNumber,
     cardNumber: index + 1,
     grid: card,
   }))
-}
-
-/**
- * Mescola un array in modo casuale (algoritmo Fisher-Yates)
- * @param {Array} array - Array da mescolare
- */
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-      ;[array[i], array[j]] = [array[j], array[i]]
-  }
 }
 
 /**
@@ -74,8 +76,6 @@ function distributeNumbers(columns, cards) {
     const colNumbers = [...columns[colIndex]]
 
     // Determina quanti numeri per ogni cartella in questa colonna
-    // Ogni cartella deve avere 15 numeri in totale, distribuiti nelle 9 colonne
-    // Alcune colonne avranno 1 numero, altre 2 (raramente 3)
     const numbersPerCard = distributeColumnNumbers(colNumbers.length, cards.length)
 
     // Assegna i numeri alle cartelle
@@ -100,28 +100,6 @@ function distributeNumbers(columns, cards) {
   for (const card of cards) {
     balanceCardRows(card)
   }
-}
-
-/**
- * Distribuisce il numero di elementi per cartella in una colonna
- * @param {number} totalNumbers - Numero totale di elementi nella colonna
- * @param {number} numCards - Numero di cartelle
- * @returns {Array} Array con il numero di elementi per cartella
- */
-function distributeColumnNumbers(totalNumbers, numCards) {
-  // Inizializza con la distribuzione base
-  const distribution = Array(numCards).fill(Math.floor(totalNumbers / numCards))
-
-  // Distribuisci i numeri rimanenti
-  const remaining = totalNumbers - Math.floor(totalNumbers / numCards) * numCards
-  for (let i = 0; i < remaining; i++) {
-    distribution[i]++
-  }
-
-  // Mescola la distribuzione per evitare che le prime cartelle abbiano sempre più numeri
-  shuffleArray(distribution)
-
-  return distribution
 }
 
 /**

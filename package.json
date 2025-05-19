@@ -1,15 +1,19 @@
 {
   "name": "tombola-generator",
   "version": "1.0.0",
-  "description": "Generatore di cartelle della tombola italiana",
+  "description": "Generatore di cartelle per la tombola",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
-  "keywords": ["tombola", "bingo", "generator"],
-  "author": "<nicola marano nicola.marano02@gmail.com>",
+  "keywords": [
+    "tombola",
+    "bingo",
+    "generator"
+  ],
+  "author": "",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2"
