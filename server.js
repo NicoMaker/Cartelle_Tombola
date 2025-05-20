@@ -1,7 +1,6 @@
 import express from "express"
 import path from "path"
 import { fileURLToPath } from "url"
-import chart from "chart.js"
 
 // Ottieni il percorso corrente
 const __filename = fileURLToPath(import.meta.url)
